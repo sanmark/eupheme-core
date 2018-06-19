@@ -1,0 +1,13 @@
+version: '3'
+services:
+  lk-sanmark-minerva-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./docker-compose.d/dev.env
+    image: lk-sanmark-minerva-dev
+    ports:
+      - 80:80
+    volumes:
+      - ./src:/app
