@@ -14,7 +14,10 @@
 		</testsuite>
 
 		<testsuite name="Unit">
-			<directory suffix="Test.php">./tests/Unit</directory>
+			<directory suffix="Test.php">./app/Handlers/Tests</directory>
+			<directory suffix="Test.php">./app/Http/Controllers/Api/Tests</directory>
+			<directory suffix="Test.php">./app/Repos/Concretes/Eloquent/Models/Tests</directory>
+			<directory suffix="Test.php">./app/Repos/Concretes/Eloquent/Repos/Tests</directory>
 		</testsuite>
 	</testsuites>
 	<filter>
@@ -29,5 +32,7 @@
 		<env name="SESSION_DRIVER" value="array"/>
 		<env name="QUEUE_DRIVER" value="sync"/>
 		<env name="MAIL_DRIVER" value="array"/>
+		<env name="DB_CONNECTION" value="sqlite"/>
+		<env name="DB_DATABASE" value=":memory:"/>
 	</php>
 </phpunit>

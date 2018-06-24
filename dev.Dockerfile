@@ -2,7 +2,7 @@
 FROM a2way/dunp:v0.1.0
 
 #Install required packages.
-RUN apt-get install -y php-mbstring php-mysql php-xml trash-cli unzip
+RUN apt-get install -y php-mbstring php-mysql php-xdebug php-xml trash-cli unzip
 
 #Install composer.
 RUN apt-get install -y composer

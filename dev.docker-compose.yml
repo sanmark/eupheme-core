@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     env_file:
-      - ./docker-compose.d/dev.env
+      - ./src/.env
     image: lk-sanmark-minerva-dev
     ports:
       - 80:80
