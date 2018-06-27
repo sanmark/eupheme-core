@@ -5,5 +5,11 @@ $files = glob ( $path ) ;
 
 foreach ( $files as $file )
 {
-	require_once $file ;
+	if ( app () -> environment ( 'testing' ) )
+	{
+		require $file ;
+	} else
+	{
+		require_once $file ;
+	}
 }

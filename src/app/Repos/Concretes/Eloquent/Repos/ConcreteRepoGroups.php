@@ -47,4 +47,37 @@ class ConcreteRepoGroups implements RepoGroups
 		return $groups ;
 	}
 
+	public function create (
+	string $name
+	, string $ref
+	, int $parentId = NULL
+	): Group
+	{
+		/* @var $eloquentGroup EloquentGroup */
+		$eloquentGroup = $this
+			-> eloquentGroup
+			-> newInstance () ;
+
+		$eloquentGroup -> name = $name ;
+		$eloquentGroup -> ref = $ref ;
+
+		if ( ! is_null ( $parentId ) )
+		{
+			$eloquentGroup -> parent_id = $parentId ;
+		}
+
+		$eloquentGroup -> save () ;
+
+		$group = new Group() ;
+
+		$group -> id = $eloquentGroup -> id ;
+		$group -> name = $eloquentGroup -> name ;
+		$group -> parentId = $eloquentGroup -> parent_id ;
+		$group -> ref = $eloquentGroup -> ref ;
+		$group -> createdAt = $eloquentGroup -> getCreatedAtTimestampOrNull () ;
+		$group -> updatedAt = $eloquentGroup -> getUpdatedAtTimestampOrNull () ;
+
+		return $group ;
+	}
+
 }

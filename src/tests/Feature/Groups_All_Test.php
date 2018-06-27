@@ -4,7 +4,10 @@ namespace Tests\Feature ;
 
 use Tests\TestCase ;
 
-class GroupsListTest extends TestCase
+/**
+ * @codeCoverageIgnore
+ */
+class Groups_All_Test extends TestCase
 {
 
 	public function test_ok ()

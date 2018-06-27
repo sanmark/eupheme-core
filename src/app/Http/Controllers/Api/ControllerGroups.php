@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api ;
 
 use App\Handlers\HandlerGroups ;
+use App\Http\Responses\ErrorResponse ;
 use App\Http\Responses\SuccessResponse ;
+use App\Validators\Exceptions\InvalidInputException ;
+use Illuminate\Http\Request ;
 use Illuminate\Routing\Controller ;
 
 class ControllerGroups extends Controller
@@ -31,6 +34,34 @@ class ControllerGroups extends Controller
 				$response
 				-> getResponse ()
 		;
+	}
+
+	public function create ( Request $request )
+	{
+		try
+		{
+			$data = $request -> toArray () ;
+
+			$group = $this
+				-> handlerGroups
+				-> create ( $data )
+			;
+
+			$response = new SuccessResponse ( $group , 201 ) ;
+
+			return
+					$response
+					-> getResponse ()
+			;
+		} catch ( InvalidInputException $exc )
+		{
+			$response = new ErrorResponse ( $exc -> getErrors () , 422 ) ;
+
+			return
+					$response
+					-> getResponse ()
+			;
+		}
 	}
 
 }

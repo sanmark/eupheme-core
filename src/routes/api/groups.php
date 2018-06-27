@@ -10,5 +10,8 @@ use Illuminate\Routing\Router ;
 	$controller = ControllerGroups::class . '@' ;
 
 	$r -> get ( '' , $controller . 'all' )
-		-> name ( 'api.groups.index' ) ;
+		-> name ( 'api.groups.all' ) ;
+
+	$r -> post ( '' , $controller . 'create' )
+		-> name ( 'api.groups.create' ) ;
 } ) ;

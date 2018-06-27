@@ -18,6 +18,7 @@
 			<directory suffix="Test.php">./app/Http/Controllers/Api/Tests</directory>
 			<directory suffix="Test.php">./app/Repos/Concretes/Eloquent/Models/Tests</directory>
 			<directory suffix="Test.php">./app/Repos/Concretes/Eloquent/Repos/Tests</directory>
+			<directory suffix="Test.php">./app/Validators/Concretes/Laravel/Validators/Tests</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

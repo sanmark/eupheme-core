@@ -140,6 +140,7 @@ return [
 		App\Providers\EventServiceProvider::class ,
 		App\Providers\RouteServiceProvider::class ,
 		\App\Repos\Concretes\Eloquent\EloquentReposProvider::class ,
+		\App\Validators\Concretes\Laravel\LaravelValidatorsProvider::class ,
 	] ,
 	/*
 	  |--------------------------------------------------------------------------
