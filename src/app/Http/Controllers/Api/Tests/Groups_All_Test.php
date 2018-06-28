@@ -22,7 +22,7 @@ class ControllerGroups_All_Test extends TestCase
 		$handlerGroups
 			-> shouldReceive ( 'all' )
 			-> withArgs ( [] )
-			-> andReturn ( 149 )
+			-> andReturn ( [ 149 ] )
 		;
 
 		/* @var $response JsonResponse */
@@ -30,7 +30,7 @@ class ControllerGroups_All_Test extends TestCase
 
 		$this -> assertInstanceOf ( JsonResponse::class , $response ) ;
 		$this -> assertSame ( 200 , $response -> status () ) ;
-		$this -> assertEquals ( ( object ) [ 'data' => 149 , ] , $response -> getData () ) ;
+		$this -> assertEquals ( ( object ) [ 'data' => [ 149 ] , ] , $response -> getData () ) ;
 	}
 
 }

@@ -14,4 +14,7 @@ use Illuminate\Routing\Router ;
 
 	$r -> post ( '' , $controller . 'create' )
 		-> name ( 'api.groups.create' ) ;
+
+	$r -> get ( '{id}' , $controller . 'one' )
+		-> name ( 'api.groups.one' ) ;
 } ) ;

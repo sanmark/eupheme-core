@@ -21,7 +21,7 @@ class HandlerGroups
 		$this -> validatorGroups = $validatorGroups ;
 	}
 
-	public function all ()
+	public function all (): array
 	{
 		$groups = $this
 			-> repoGroups
@@ -50,6 +50,16 @@ class HandlerGroups
 		$group = $this
 			-> repoGroups
 			-> create ( $name , $ref , $parentId ) ;
+		;
+
+		return $group ;
+	}
+
+	public function one ( int $id ): Group
+	{
+		$group = $this
+			-> repoGroups
+			-> one ( $id )
 		;
 
 		return $group ;

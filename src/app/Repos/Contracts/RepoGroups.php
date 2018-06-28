@@ -14,4 +14,6 @@ interface RepoGroups
 	, string $ref
 	, int $parentId = NULL
 	): Group ;
+
+	public function one ( int $id ): Group ;
 }
