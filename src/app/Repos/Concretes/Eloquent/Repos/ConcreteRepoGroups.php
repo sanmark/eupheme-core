@@ -108,4 +108,45 @@ class ConcreteRepoGroups implements RepoGroups
 		}
 	}
 
+	public function update (
+	int $id
+	, string $name
+	, string $ref
+	, int $parentId = NULL
+	): Group
+	{
+		try
+		{
+			/* @var $eloquentGroup EloquentGroup */
+			$eloquentGroup = $this
+				-> eloquentGroup
+				-> findOrFail ( $id )
+			;
+
+			$eloquentGroup -> name = $name ;
+			$eloquentGroup -> ref = $ref ;
+
+			if ( ! is_null ( $parentId ) )
+			{
+				$eloquentGroup -> parent_id = $parentId ;
+			}
+
+			$eloquentGroup -> save () ;
+
+			$group = new Group() ;
+
+			$group -> id = $eloquentGroup -> id ;
+			$group -> name = $eloquentGroup -> name ;
+			$group -> parentId = $eloquentGroup -> parent_id ;
+			$group -> ref = $eloquentGroup -> ref ;
+			$group -> createdAt = $eloquentGroup -> getCreatedAtTimestampOrNull () ;
+			$group -> updatedAt = $eloquentGroup -> getUpdatedAtTimestampOrNull () ;
+
+			return $group ;
+		} catch ( ModelNotFoundException $ex )
+		{
+			throw new RecordNotFoundException() ;
+		}
+	}
+
 }

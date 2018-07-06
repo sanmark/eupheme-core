@@ -90,4 +90,40 @@ class ControllerGroups extends Controller
 		}
 	}
 
+	public function update ( Request $request , int $id )
+	{
+		try
+		{
+			$data = $request -> toArray () ;
+
+			$group = $this
+				-> handlerGroups
+				-> update ( $id , $data )
+			;
+
+			$response = new SuccessResponse ( $group ) ;
+
+			return
+					$response
+					-> getResponse ()
+			;
+		} catch ( InvalidInputException $exc )
+		{
+			$response = new ErrorResponse ( $exc -> getErrors () , 422 ) ;
+
+			return
+					$response
+					-> getResponse ()
+			;
+		} catch ( RecordNotFoundException $ex )
+		{
+			$response = new ErrorResponse ( NULL , 404 ) ;
+
+			return
+					$response
+					-> getResponse ()
+			;
+		}
+	}
+
 }

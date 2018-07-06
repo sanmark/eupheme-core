@@ -26,4 +26,21 @@ class ConcreteValidatorGroups extends Base implements ValidatorGroups
 		$this -> process ( $data , $rules ) ;
 	}
 
+	public function update ( array $data )
+	{
+		$rules = [
+			'name' => [
+				ConstantsRules::Required => ConstantsResponses::Required ,
+			] ,
+			'parentId' => [
+				ConstantsRules::Integer => ConstantsResponses::MustBeInteger ,
+			] ,
+			'ref' => [
+				ConstantsRules::Required => ConstantsResponses::Required ,
+			]
+			] ;
+
+		$this -> process ( $data , $rules ) ;
+	}
+
 }

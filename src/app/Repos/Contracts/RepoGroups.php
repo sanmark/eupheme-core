@@ -16,4 +16,11 @@ interface RepoGroups
 	): Group ;
 
 	public function one ( int $id ): Group ;
+
+	public function update (
+	int $id
+	, string $name
+	, string $ref
+	, int $parentId = NULL
+	): Group ;
 }

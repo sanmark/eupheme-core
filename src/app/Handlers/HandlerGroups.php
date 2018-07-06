@@ -65,4 +65,28 @@ class HandlerGroups
 		return $group ;
 	}
 
+	public function update ( int $id , array $data ): Group
+	{
+		$this
+			-> validatorGroups
+			-> update ( $data )
+		;
+
+		$name = $data[ 'name' ] ;
+		$ref = $data[ 'ref' ] ;
+
+		$parentId = NULL ;
+		if ( array_key_exists ( 'parentId' , $data ) )
+		{
+			$parentId = $data[ 'parentId' ] ;
+		}
+
+		$group = $this
+			-> repoGroups
+			-> update ( $id , $name , $ref , $parentId )
+		;
+
+		return $group ;
+	}
+
 }

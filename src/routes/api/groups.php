@@ -17,4 +17,7 @@ use Illuminate\Routing\Router ;
 
 	$r -> get ( '{id}' , $controller . 'one' )
 		-> name ( 'api.groups.one' ) ;
+
+	$r -> patch ( '{id}' , $controller . 'update' )
+		-> name ( 'api.groups.update' ) ;
 } ) ;

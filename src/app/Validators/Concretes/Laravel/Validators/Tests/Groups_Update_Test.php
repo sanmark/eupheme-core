@@ -9,7 +9,7 @@ use Tests\TestCase ;
 /**
  * @codeCoverageIgnore
  */
-class Groups_Create_Test extends TestCase
+class Groups_Update_Test extends TestCase
 {
 
 	public function test_ok ()
@@ -57,7 +57,7 @@ class Groups_Create_Test extends TestCase
 
 			try
 			{
-				$concreteValidatorGroups -> create ( $data ) ;
+				$concreteValidatorGroups -> update ( $data ) ;
 			} catch ( InvalidInputException $ex )
 			{
 				$errors = $ex -> getErrors () ;

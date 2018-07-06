@@ -29,4 +29,15 @@ class Groups_One_Test extends TestCase
 		] ) ;
 	}
 
+	public function test_invalidId ()
+	{
+		$this -> seed () ;
+
+		$response = $this -> get ( 'api/groups/3' ) ;
+
+		$response -> assertStatus ( 404 ) ;
+
+		$response -> assertJson ( [ 'errors' => [] ] ) ;
+	}
+
 }
