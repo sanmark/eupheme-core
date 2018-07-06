@@ -2,19 +2,20 @@
 
 namespace Tests\Feature ;
 
-use Tests\TestCase ;
-
 /**
  * @codeCoverageIgnore
  */
-class Groups_One_Test extends TestCase
+class Groups_One_Test extends Base
 {
+
+	protected $url = 'api/groups/1' ;
+	protected $httpVerb = 'get' ;
 
 	public function test_ok ()
 	{
 		$this -> seed () ;
 
-		$response = $this -> get ( 'api/groups/1' ) ;
+		$response = $this -> getWithValidAppKeyAndSecretHash ( 'api/groups/1' ) ;
 
 		$response -> assertStatus ( 200 ) ;
 
@@ -33,7 +34,7 @@ class Groups_One_Test extends TestCase
 	{
 		$this -> seed () ;
 
-		$response = $this -> get ( 'api/groups/3' ) ;
+		$response = $this -> getWithValidAppKeyAndSecretHash ( 'api/groups/3' ) ;
 
 		$response -> assertStatus ( 404 ) ;
 

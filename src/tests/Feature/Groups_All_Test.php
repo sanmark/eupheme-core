@@ -7,14 +7,17 @@ use Tests\TestCase ;
 /**
  * @codeCoverageIgnore
  */
-class Groups_All_Test extends TestCase
+class Groups_All_Test extends Base
 {
+
+	protected $url = 'api/groups' ;
+	protected $httpVerb = 'get' ;
 
 	public function test_ok ()
 	{
 		$this -> seed () ;
 
-		$response = $this -> get ( 'api/groups' ) ;
+		$response = $this -> getWithValidAppKeyAndSecretHash ( 'api/groups' ) ;
 
 		$response -> assertStatus ( 200 ) ;
 

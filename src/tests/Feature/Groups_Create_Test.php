@@ -2,17 +2,18 @@
 
 namespace Tests\Feature ;
 
-use Tests\TestCase ;
-
 /**
  * @codeCoverageIgnore
  */
-class Groups_Create_Test extends TestCase
+class Groups_Create_Test extends Base
 {
+
+	protected $url = 'api/groups' ;
+	protected $httpVerb = 'post' ;
 
 	public function test_ok ()
 	{
-		$response = $this -> post ( 'api/groups' , [
+		$response = $this -> postWithValidAppKeyAndSecretHash ( 'api/groups' , [
 			'name' => 'the-name' ,
 			'parentId' => 149 ,
 			'ref' => 'the-ref' ,
@@ -31,7 +32,7 @@ class Groups_Create_Test extends TestCase
 
 	public function test_throwsErrorOnInvalidInput ()
 	{
-		$response = $this -> post ( 'api/groups' ) ;
+		$response = $this -> postWithValidAppKeyAndSecretHash ( 'api/groups' ) ;
 
 		$response -> assertStatus ( 422 ) ;
 

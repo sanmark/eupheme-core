@@ -2,19 +2,20 @@
 
 namespace Tests\Feature ;
 
-use Tests\TestCase ;
-
 /**
  * @codeCoverageIgnore
  */
-class Groups_Update_Test extends TestCase
+class Groups_Update_Test extends Base
 {
+
+	protected $url = 'api/groups/1' ;
+	protected $httpVerb = 'patch' ;
 
 	public function test_ok ()
 	{
 		$this -> seed () ;
 
-		$response = $this -> patch ( 'api/groups/1' , [
+		$response = $this -> patchWithValidAppKeyAndSecretHash ( 'api/groups/1' , [
 			'name' => 'the-new-name' ,
 			'parentId' => 149 ,
 			'ref' => 'the-new-ref' ,
@@ -37,7 +38,7 @@ class Groups_Update_Test extends TestCase
 	{
 		$this -> seed () ;
 
-		$response = $this -> patch ( 'api/groups/3' , [
+		$response = $this -> patchWithValidAppKeyAndSecretHash ( 'api/groups/3' , [
 			'name' => 'the-new-name' ,
 			'parentId' => 149 ,
 			'ref' => 'the-new-ref' ,
@@ -52,7 +53,7 @@ class Groups_Update_Test extends TestCase
 	{
 		$this -> seed () ;
 
-		$response = $this -> patch ( 'api/groups/1' ) ;
+		$response = $this -> patchWithValidAppKeyAndSecretHash ( 'api/groups/1' ) ;
 
 		$response -> assertStatus ( 422 ) ;
 
