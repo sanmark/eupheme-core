@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature ;
+namespace Tests\Feature;
 
 /**
  * @codeCoverageIgnore
@@ -8,65 +8,65 @@ namespace Tests\Feature ;
 class Groups_Update_Test extends Base
 {
 
-	protected $url = 'api/groups/1' ;
-	protected $httpVerb = 'patch' ;
+    protected $url = 'api/groups/1';
+    protected $httpVerb = 'patch';
 
-	public function test_ok ()
-	{
-		$this -> seed () ;
+    public function test_ok()
+    {
+        $this -> seed();
 
-		$response = $this -> patchWithValidAppKeyAndSecretHash ( 'api/groups/1' , [
-			'name' => 'the-new-name' ,
-			'parentId' => 149 ,
-			'ref' => 'the-new-ref' ,
-			] ) ;
+        $response = $this -> patchWithValidAppKeyAndSecretHash('api/groups/1', [
+            'name' => 'the-new-name',
+            'parentId' => 149,
+            'ref' => 'the-new-ref',
+        ]);
 
-		$response -> assertStatus ( 200 ) ;
+        $response -> assertStatus(200);
 
-		$response -> assertJson ( [
-			'data' => [
-				'id' => 1 ,
-				'name' => 'the-new-name' ,
-				'parentId' => 149 ,
-				'ref' => 'the-new-ref' ,
-				'deletedAt' => NULL ,
-			] ,
-		] ) ;
-	}
+        $response -> assertJson([
+            'data' => [
+                'id' => 1,
+                'name' => 'the-new-name',
+                'parentId' => 149,
+                'ref' => 'the-new-ref',
+                'deletedAt' => null,
+            ],
+        ]);
+    }
 
-	public function test_invalidId ()
-	{
-		$this -> seed () ;
+    public function test_invalidId()
+    {
+        $this -> seed();
 
-		$response = $this -> patchWithValidAppKeyAndSecretHash ( 'api/groups/3' , [
-			'name' => 'the-new-name' ,
-			'parentId' => 149 ,
-			'ref' => 'the-new-ref' ,
-			] ) ;
+        $response = $this -> patchWithValidAppKeyAndSecretHash('api/groups/3', [
+            'name' => 'the-new-name',
+            'parentId' => 149,
+            'ref' => 'the-new-ref',
+        ]);
 
-		$response -> assertStatus ( 404 ) ;
+        $response -> assertStatus(404);
 
-		$response -> assertJson ( [ 'errors' => [] ] ) ;
-	}
+        $response -> assertJson(['errors' => []]);
+    }
 
-	public function test_throwsErrorOnInvalidInput ()
-	{
-		$this -> seed () ;
+    public function test_throwsErrorOnInvalidInput()
+    {
+        $this -> seed();
 
-		$response = $this -> patchWithValidAppKeyAndSecretHash ( 'api/groups/1' ) ;
+        $response = $this -> patchWithValidAppKeyAndSecretHash('api/groups/1');
 
-		$response -> assertStatus ( 422 ) ;
+        $response -> assertStatus(422);
 
-		$response -> assertJson ( [
-			'errors' => [
-				'name' => [
-					'required' ,
-				] ,
-				'ref' => [
-					'required' ,
-				] ,
-			] ,
-		] ) ;
-	}
+        $response -> assertJson([
+            'errors' => [
+                'name' => [
+                    'required',
+                ],
+                'ref' => [
+                    'required',
+                ],
+            ],
+        ]);
+    }
 
 }

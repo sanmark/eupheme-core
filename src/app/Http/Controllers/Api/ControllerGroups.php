@@ -1,129 +1,110 @@
 <?php
 
-namespace App\Http\Controllers\Api ;
+namespace App\Http\Controllers\Api;
 
-use App\Handlers\HandlerGroups ;
-use App\Http\Responses\ErrorResponse ;
-use App\Http\Responses\SuccessResponse ;
-use App\Repos\Exceptions\RecordNotFoundException ;
-use App\Validators\Exceptions\InvalidInputException ;
-use Illuminate\Http\Request ;
-use Illuminate\Routing\Controller ;
+use App\Handlers\HandlerGroups;
+use App\Http\Responses\ErrorResponse;
+use App\Http\Responses\SuccessResponse;
+use App\Repos\Exceptions\RecordNotFoundException;
+use App\Validators\Exceptions\InvalidInputException;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class ControllerGroups extends Controller
 {
 
-	private $handlerGroups ;
+    private $handlerGroups;
 
-	public function __construct (
-	HandlerGroups $handlerGroups
-	)
-	{
-		$this -> handlerGroups = $handlerGroups ;
-	}
+    public function __construct(
+        HandlerGroups $handlerGroups
+    ) {
+        $this -> handlerGroups = $handlerGroups;
+    }
 
-	public function all ()
-	{
-		$groups = $this
-			-> handlerGroups
-			-> all ()
-		;
+    public function all()
+    {
+        $groups = $this
+            -> handlerGroups
+            -> all();
 
-		$response = new SuccessResponse ( $groups ) ;
+        $response = new SuccessResponse ($groups);
 
-		return
-				$response
-				-> getResponse ()
-		;
-	}
+        return
+            $response
+                -> getResponse();
+    }
 
-	public function create ( Request $request )
-	{
-		try
-		{
-			$data = $request -> toArray () ;
+    public function create(Request $request)
+    {
+        try {
+            $data = $request -> toArray();
 
-			$group = $this
-				-> handlerGroups
-				-> create ( $data )
-			;
+            $group = $this
+                -> handlerGroups
+                -> create($data);
 
-			$response = new SuccessResponse ( $group , 201 ) ;
+            $response = new SuccessResponse ($group, 201);
 
-			return
-					$response
-					-> getResponse ()
-			;
-		} catch ( InvalidInputException $exc )
-		{
-			$response = new ErrorResponse ( $exc -> getErrors () , 422 ) ;
+            return
+                $response
+                    -> getResponse();
+        } catch (InvalidInputException $exc) {
+            $response = new ErrorResponse ($exc -> getErrors(), 422);
 
-			return
-					$response
-					-> getResponse ()
-			;
-		}
-	}
+            return
+                $response
+                    -> getResponse();
+        }
+    }
 
-	public function one ( int $id )
-	{
-		try
-		{
-			$group = $this
-				-> handlerGroups
-				-> one ( $id ) ;
+    public function one(int $id)
+    {
+        try {
+            $group = $this
+                -> handlerGroups
+                -> one($id);
 
-			$response = new SuccessResponse ( $group ) ;
+            $response = new SuccessResponse ($group);
 
-			return
-					$response
-					-> getResponse ()
-			;
-		} catch ( RecordNotFoundException $exc )
-		{
-			$response = new ErrorResponse ( NULL , 404 ) ;
+            return
+                $response
+                    -> getResponse();
+        } catch (RecordNotFoundException $exc) {
+            $response = new ErrorResponse (null, 404);
 
-			return
-					$response
-					-> getResponse ()
-			;
-		}
-	}
+            return
+                $response
+                    -> getResponse();
+        }
+    }
 
-	public function update ( Request $request , int $id )
-	{
-		try
-		{
-			$data = $request -> toArray () ;
+    public function update(Request $request, int $id)
+    {
+        try {
+            $data = $request -> toArray();
 
-			$group = $this
-				-> handlerGroups
-				-> update ( $id , $data )
-			;
+            $group = $this
+                -> handlerGroups
+                -> update($id, $data);
 
-			$response = new SuccessResponse ( $group ) ;
+            $response = new SuccessResponse ($group);
 
-			return
-					$response
-					-> getResponse ()
-			;
-		} catch ( InvalidInputException $exc )
-		{
-			$response = new ErrorResponse ( $exc -> getErrors () , 422 ) ;
+            return
+                $response
+                    -> getResponse();
+        } catch (InvalidInputException $exc) {
+            $response = new ErrorResponse ($exc -> getErrors(), 422);
 
-			return
-					$response
-					-> getResponse ()
-			;
-		} catch ( RecordNotFoundException $ex )
-		{
-			$response = new ErrorResponse ( NULL , 404 ) ;
+            return
+                $response
+                    -> getResponse();
+        } catch (RecordNotFoundException $ex) {
+            $response = new ErrorResponse (null, 404);
 
-			return
-					$response
-					-> getResponse ()
-			;
-		}
-	}
+            return
+                $response
+                    -> getResponse();
+        }
+    }
 
 }

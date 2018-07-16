@@ -1,8 +1,6 @@
 <?php
 
-namespace Tests\Feature ;
-
-use Tests\TestCase ;
+namespace Tests\Feature;
 
 /**
  * @codeCoverageIgnore
@@ -10,35 +8,35 @@ use Tests\TestCase ;
 class Groups_All_Test extends Base
 {
 
-	protected $url = 'api/groups' ;
-	protected $httpVerb = 'get' ;
+    protected $url = 'api/groups';
+    protected $httpVerb = 'get';
 
-	public function test_ok ()
-	{
-		$this -> seed () ;
+    public function test_ok()
+    {
+        $this -> seed();
 
-		$response = $this -> getWithValidAppKeyAndSecretHash ( 'api/groups' ) ;
+        $response = $this -> getWithValidAppKeyAndSecretHash('api/groups');
 
-		$response -> assertStatus ( 200 ) ;
+        $response -> assertStatus(200);
 
-		$response -> assertJson ( [
-			'data' => [
-				[
-					'id' => 1 ,
-					'name' => 'vehicles' ,
-					'parentId' => NULL ,
-					'ref' => 'vehicles' ,
-					'deletedAt' => NULL ,
-				] ,
-				[
-					'id' => 2 ,
-					'name' => 'vacancies' ,
-					'parentId' => NULL ,
-					'ref' => 'vacancies' ,
-					'deletedAt' => NULL ,
-				] ,
-			] ,
-			] , TRUE ) ;
-	}
+        $response -> assertJson([
+            'data' => [
+                [
+                    'id' => 1,
+                    'name' => 'vehicles',
+                    'parentId' => null,
+                    'ref' => 'vehicles',
+                    'deletedAt' => null,
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'vacancies',
+                    'parentId' => null,
+                    'ref' => 'vacancies',
+                    'deletedAt' => null,
+                ],
+            ],
+        ], true);
+    }
 
 }

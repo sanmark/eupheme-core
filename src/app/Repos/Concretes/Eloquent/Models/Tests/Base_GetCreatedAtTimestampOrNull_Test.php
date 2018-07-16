@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repos\Concretes\Eloquent\Models\Tests ;
+namespace App\Repos\Concretes\Eloquent\Models\Tests;
 
-use App\Repos\Concretes\Eloquent\Models\Base ;
-use stdClass ;
-use Tests\TestCase ;
+use App\Repos\Concretes\Eloquent\Models\Base;
+use stdClass;
+use Tests\TestCase;
 
 /**
  * @codeCoverageIgnore
@@ -12,39 +12,37 @@ use Tests\TestCase ;
 class Base_GetCreatedAtTimestampOrNull_Test extends TestCase
 {
 
-	public function test_ok ()
-	{
-		/* @var $base Base */
-		$base = $this -> mock ( Base::class . '[getAttribute]' ) ;
-		$createdAt = $this -> mock ( stdClass::class ) ;
+    public function test_ok()
+    {
+        /* @var $base Base */
+        $base = $this -> mock(Base::class . '[getAttribute]');
+        $createdAt = $this -> mock(stdClass::class);
 
-		$base
-			-> shouldReceive ( 'getAttribute' )
-			-> withArgs ( [ 'created_at' ] )
-			-> andReturn ( $createdAt )
-		;
+        $base
+            -> shouldReceive('getAttribute')
+            -> withArgs(['created_at'])
+            -> andReturn($createdAt);
 
-		$createdAt -> timestamp = 149 ;
+        $createdAt -> timestamp = 149;
 
-		$response = $base -> getCreatedAtTimestampOrNull () ;
+        $response = $base -> getCreatedAtTimestampOrNull();
 
-		$this -> assertEquals ( 149 , $response ) ;
-	}
+        $this -> assertEquals(149, $response);
+    }
 
-	public function test_noCreatedAt ()
-	{
-		/* @var $base Base */
-		$base = $this -> mock ( Base::class . '[getAttribute]' ) ;
+    public function test_noCreatedAt()
+    {
+        /* @var $base Base */
+        $base = $this -> mock(Base::class . '[getAttribute]');
 
-		$base
-			-> shouldReceive ( 'getAttribute' )
-			-> withArgs ( [ 'created_at' ] )
-			-> andReturnNull ()
-		;
+        $base
+            -> shouldReceive('getAttribute')
+            -> withArgs(['created_at'])
+            -> andReturnNull();
 
-		$response = $base -> getCreatedAtTimestampOrNull () ;
+        $response = $base -> getCreatedAtTimestampOrNull();
 
-		$this -> assertNull ( $response ) ;
-	}
+        $this -> assertNull($response);
+    }
 
 }

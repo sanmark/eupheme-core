@@ -1,52 +1,46 @@
 <?php
 
-namespace App\Repos\Concretes\Eloquent\Models ;
+namespace App\Repos\Concretes\Eloquent\Models;
 
-use Illuminate\Database\Eloquent\Model ;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class Base extends Model
 {
 
-	public function getCreatedAtTimestampOrNull ()
-	{
-		if ( $this -> created_at )
-		{
-			return
-				$this
-				-> created_at
-				-> timestamp
-			;
-		}
+    public function getCreatedAtTimestampOrNull()
+    {
+        if ($this -> created_at) {
+            return
+                $this
+                    -> created_at
+                    -> timestamp;
+        }
 
-		return NULL ;
-	}
+        return null;
+    }
 
-	public function getDeletedAtTimestampOrNull ()
-	{
-		if ( $this -> deleted_at )
-		{
-			return
-				$this
-				-> deleted_at
-				-> timestamp
-			;
-		}
+    public function getDeletedAtTimestampOrNull()
+    {
+        if ($this -> deleted_at) {
+            return
+                $this
+                    -> deleted_at
+                    -> timestamp;
+        }
 
-		return NULL ;
-	}
+        return null;
+    }
 
-	public function getUpdatedAtTimestampOrNull ()
-	{
-		if ( $this -> updated_at )
-		{
-			return
-				$this
-				-> updated_at
-				-> timestamp
-			;
-		}
+    public function getUpdatedAtTimestampOrNull()
+    {
+        if ($this -> updated_at) {
+            return
+                $this
+                    -> updated_at
+                    -> timestamp;
+        }
 
-		return NULL ;
-	}
+        return null;
+    }
 
 }

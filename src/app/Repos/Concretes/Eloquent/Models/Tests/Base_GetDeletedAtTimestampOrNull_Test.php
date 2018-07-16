@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repos\Concretes\Eloquent\Models\Tests ;
+namespace App\Repos\Concretes\Eloquent\Models\Tests;
 
-use App\Repos\Concretes\Eloquent\Models\Base ;
-use stdClass ;
-use Tests\TestCase ;
+use App\Repos\Concretes\Eloquent\Models\Base;
+use stdClass;
+use Tests\TestCase;
 
 /**
  * @codeCoverageIgnore
@@ -12,39 +12,37 @@ use Tests\TestCase ;
 class Base_GetDeletedAtTimestampOrNull_Test extends TestCase
 {
 
-	public function test_ok ()
-	{
-		/* @var $base Base */
-		$base = $this -> mock ( Base::class . '[getAttribute]' ) ;
-		$deletedAt = $this -> mock ( stdClass::class ) ;
+    public function test_ok()
+    {
+        /* @var $base Base */
+        $base = $this -> mock(Base::class . '[getAttribute]');
+        $deletedAt = $this -> mock(stdClass::class);
 
-		$base
-			-> shouldReceive ( 'getAttribute' )
-			-> withArgs ( [ 'deleted_at' ] )
-			-> andReturn ( $deletedAt )
-		;
+        $base
+            -> shouldReceive('getAttribute')
+            -> withArgs(['deleted_at'])
+            -> andReturn($deletedAt);
 
-		$deletedAt -> timestamp = 149 ;
+        $deletedAt -> timestamp = 149;
 
-		$response = $base -> getDeletedAtTimestampOrNull () ;
+        $response = $base -> getDeletedAtTimestampOrNull();
 
-		$this -> assertEquals ( 149 , $response ) ;
-	}
+        $this -> assertEquals(149, $response);
+    }
 
-	public function test_noDeletedAt ()
-	{
-		/* @var $base Base */
-		$base = $this -> mock ( Base::class . '[getAttribute]' ) ;
+    public function test_noDeletedAt()
+    {
+        /* @var $base Base */
+        $base = $this -> mock(Base::class . '[getAttribute]');
 
-		$base
-			-> shouldReceive ( 'getAttribute' )
-			-> withArgs ( [ 'deleted_at' ] )
-			-> andReturnNull ()
-		;
+        $base
+            -> shouldReceive('getAttribute')
+            -> withArgs(['deleted_at'])
+            -> andReturnNull();
 
-		$response = $base -> getDeletedAtTimestampOrNull () ;
+        $response = $base -> getDeletedAtTimestampOrNull();
 
-		$this -> assertNull ( $response ) ;
-	}
+        $this -> assertNull($response);
+    }
 
 }

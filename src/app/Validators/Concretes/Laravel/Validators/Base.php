@@ -1,99 +1,94 @@
 <?php
 
-namespace App\Validators\Concretes\Laravel\Validators ;
+namespace App\Validators\Concretes\Laravel\Validators;
 
-use App\Validators\Exceptions\InvalidInputException ;
-use function validator ;
+use App\Validators\Exceptions\InvalidInputException;
+use function validator;
 
 abstract class Base
 {
 
-	protected function process ( array $data , array $mixedRulesAndMessages )
-	{
-		$rulesAndMessages = $this -> rearrangeMixedRulesAndMessages ( $mixedRulesAndMessages ) ;
-		$rules = $rulesAndMessages[ 'rules' ] ;
-		$messages = $rulesAndMessages[ 'messages' ] ;
+    protected function process(array $data, array $mixedRulesAndMessages)
+    {
+        $rulesAndMessages = $this -> rearrangeMixedRulesAndMessages($mixedRulesAndMessages);
+        $rules = $rulesAndMessages['rules'];
+        $messages = $rulesAndMessages['messages'];
 
-		$messagesLaravelStyle = $this -> generateLaravelStyleMessages ( $messages ) ;
+        $messagesLaravelStyle = $this -> generateLaravelStyleMessages($messages);
 
-		$validator = validator ( $data , $rules , $messagesLaravelStyle ) ;
+        $validator = validator($data, $rules, $messagesLaravelStyle);
 
-		if ( $validator -> fails () )
-		{
-			$errors = $validator
-				-> errors ()
-				-> toArray ()
-			;
+        if ($validator -> fails()) {
+            $errors = $validator
+                -> errors()
+                -> toArray();
 
-			throw new InvalidInputException ( $errors ) ;
-		}
-	}
+            throw new InvalidInputException ($errors);
+        }
+    }
 
-	/**
-	 * Generate Laravel style validator messages array from a validator message
-	 * array style specific to this system.
-	 * 
-	 * System style:
-	 * 
-	 * [
-	 *     'field_n' => [
-	 *         'rule_m' => 'message_m',
-	 *         'rule_m+1' => 'message_m+1',
-	 *     ],
-	 *     'field_n+1' => [
-	 *         'rule_l' => 'message_l',
-	 *         'rule_l+1' => 'message_l+1',
-	 *     ],
-	 * ]
-	 * 
-	 * Laravel Style:
-	 * 
-	 * [
-	 *     'field_n.rule_m' => 'message_m',
-	 *     'field_n.rule_m+1' => 'message_m+1',
-	 *     'field_n+1.rule_l' => 'message_l',
-	 *     'field_n+1.rule_l+1' => 'message_l+1',
-	 * ]
-	 * 
-	 * @param array $messages System style messages array.
-	 */
-	private function generateLaravelStyleMessages ( array $messages ): array
-	{
-		$laravelMessages = [] ;
+    private function rearrangeMixedRulesAndMessages(array $mixedRulesAndMessages): array
+    {
+        $rules = [];
+        $messages = [];
 
-		foreach ( $messages as $field => $rulesAndMessage )
-		{
-			foreach ( $rulesAndMessage as $rule => $message )
-			{
-				$fieldRuleCombo = $field . '.' . $rule ;
+        foreach ($mixedRulesAndMessages as $field => $ruleAndMessage) {
+            $rule = array_keys($ruleAndMessage)[0];
+            $message = array_values($ruleAndMessage)[0];
 
-				$laravelMessages[ $fieldRuleCombo ] = $message ;
-			}
-		}
+            $rules[$field][] = $rule;
+            $messages[$field][$rule] = $message;
+        }
 
-		return $laravelMessages ;
-	}
+        $return = [
+            'rules' => $rules,
+            'messages' => $messages,
+        ];
 
-	private function rearrangeMixedRulesAndMessages ( array $mixedRulesAndMessages ): array
-	{
-		$rules = [] ;
-		$messages = [] ;
+        return $return;
+    }
 
-		foreach ( $mixedRulesAndMessages as $field => $ruleAndMessage )
-		{
-			$rule = array_keys ( $ruleAndMessage )[ 0 ] ;
-			$message = array_values ( $ruleAndMessage )[ 0 ] ;
+    /**
+     * Generate Laravel style validator messages array from a validator message
+     * array style specific to this system.
+     *
+     * System style:
+     *
+     * [
+     *     'field_n' => [
+     *         'rule_m' => 'message_m',
+     *         'rule_m+1' => 'message_m+1',
+     *     ],
+     *     'field_n+1' => [
+     *         'rule_l' => 'message_l',
+     *         'rule_l+1' => 'message_l+1',
+     *     ],
+     * ]
+     *
+     * Laravel Style:
+     *
+     * [
+     *     'field_n.rule_m' => 'message_m',
+     *     'field_n.rule_m+1' => 'message_m+1',
+     *     'field_n+1.rule_l' => 'message_l',
+     *     'field_n+1.rule_l+1' => 'message_l+1',
+     * ]
+     *
+     * @param array $messages System style messages array.
+     */
+    private function generateLaravelStyleMessages(array $messages): array
+    {
+        $laravelMessages = [];
 
-			$rules[ $field ][] = $rule ;
-			$messages[ $field ][ $rule ] = $message ;
-		}
+        foreach ($messages as $field => $rulesAndMessage) {
+            foreach ($rulesAndMessage as $rule => $message) {
+                $fieldRuleCombo = $field . '.' . $rule;
 
-		$return = [
-			'rules' => $rules ,
-			'messages' => $messages ,
-			] ;
+                $laravelMessages[$fieldRuleCombo] = $message;
+            }
+        }
 
-		return $return ;
-	}
+        return $laravelMessages;
+    }
 
 }

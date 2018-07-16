@@ -1,135 +1,131 @@
 <?php
 
-namespace Tests ;
+namespace Tests;
 
-use Illuminate\Contracts\Hashing\Hasher ;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase ;
-use Mockery ;
-use function app ;
+use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Mockery;
+use function app;
 
 abstract class TestCase extends BaseTestCase
 {
 
-	use CreatesApplication ;
+    use CreatesApplication;
 
-	private $hasher ;
+    private $hasher;
 
-	protected function getWithInvalidAppKeyAndSecretHash ( string $uri , array $headers = [] )
-	{
-		$headers = $this -> attachInvalidAppKeyAndSecretHashToHeadersArray ( $headers ) ;
-		return parent::get ( $uri , $headers ) ;
-	}
+    protected function getWithInvalidAppKeyAndSecretHash(string $uri, array $headers = [])
+    {
+        $headers = $this -> attachInvalidAppKeyAndSecretHashToHeadersArray($headers);
+        return parent ::get($uri, $headers);
+    }
 
-	protected function getWithValidAppKeyAndInvalidSecretHash ( string $uri , array $headers = [] )
-	{
-		$headers = $this -> attachValidAppKeyAndInvalidSecretHashToHeadersArray ( $headers ) ;
-		return parent::get ( $uri , $headers ) ;
-	}
+    private function attachInvalidAppKeyAndSecretHashToHeadersArray(array $headers)
+    {
+        $hash = $this
+            -> hasher
+            -> make('sec');
 
-	protected function getWithValidAppKeyAndSecretHash ( string $uri , array $headers = [] )
-	{
-		$headers = $this -> attachValidAppKeyAndSecretHashToHeadersArray ( $headers ) ;
-		return parent::get ( $uri , $headers ) ;
-	}
+        $headers['x-lk-sanmark-minerva-app-key'] = 'invalid-key';
+        $headers['x-lk-sanmark-minerva-app-secret-hash'] = $hash;
 
-	protected function mock ( string $className , array $constructorArgs = NULL )
-	{
-		if ( is_null ( $constructorArgs ) )
-		{
-			return Mockery::mock ( $className ) ;
-		}
+        return $headers;
+    }
 
-		return Mockery::mock ( $className , $constructorArgs ) ;
-	}
+    protected function getWithValidAppKeyAndInvalidSecretHash(string $uri, array $headers = [])
+    {
+        $headers = $this -> attachValidAppKeyAndInvalidSecretHashToHeadersArray($headers);
+        return parent ::get($uri, $headers);
+    }
 
-	protected function patchWithInvalidAppKeyAndSecretHash ( string $uri , array $data = [] , array $headers = [] )
-	{
-		$headers = $this -> attachInvalidAppKeyAndSecretHashToHeadersArray ( $headers ) ;
-		return parent::patch ( $uri , $data , $headers ) ;
-	}
+    private function attachValidAppKeyAndInvalidSecretHashToHeadersArray(array $headers)
+    {
+        $hash = $this
+            -> hasher
+            -> make('invalid-sec');
 
-	protected function patchWithValidAppKeyAndSecretHash ( string $uri , array $data = [] , array $headers = [] )
-	{
-		$headers = $this -> attachValidAppKeyAndSecretHashToHeadersArray ( $headers ) ;
-		return parent::patch ( $uri , $data , $headers ) ;
-	}
+        $headers['x-lk-sanmark-minerva-app-key'] = 'key';
+        $headers['x-lk-sanmark-minerva-app-secret-hash'] = $hash;
 
-	protected function patchWithValidAppKeyAndInvalidSecretHash ( string $uri , array $data = [] , array $headers = [] )
-	{
-		$headers = $this -> attachValidAppKeyAndInvalidSecretHashToHeadersArray ( $headers ) ;
-		return parent::patch ( $uri , $data , $headers ) ;
-	}
+        return $headers;
+    }
 
-	protected function postWithInvalidAppKeyAndSecretHash ( string $uri , array $data = [] , array $headers = [] )
-	{
-		$headers = $this -> attachInvalidAppKeyAndSecretHashToHeadersArray ( $headers ) ;
-		return parent::post ( $uri , $data , $headers ) ;
-	}
+    protected function getWithValidAppKeyAndSecretHash(string $uri, array $headers = [])
+    {
+        $headers = $this -> attachValidAppKeyAndSecretHashToHeadersArray($headers);
+        return parent ::get($uri, $headers);
+    }
 
-	protected function postWithValidAppKeyAndSecretHash ( string $uri , array $data = [] , array $headers = [] )
-	{
-		$headers = $this -> attachValidAppKeyAndSecretHashToHeadersArray ( $headers ) ;
-		return parent::post ( $uri , $data , $headers ) ;
-	}
+    private function attachValidAppKeyAndSecretHashToHeadersArray(array $headers)
+    {
+        $hash = $this
+            -> hasher
+            -> make('sec');
 
-	protected function postWithValidAppKeyAndInvalidSecretHash ( string $uri , array $data = [] , array $headers = [] )
-	{
-		$headers = $this -> attachValidAppKeyAndInvalidSecretHashToHeadersArray ( $headers ) ;
-		return parent::post ( $uri , $data , $headers ) ;
-	}
+        $headers['x-lk-sanmark-minerva-app-key'] = 'key';
+        $headers['x-lk-sanmark-minerva-app-secret-hash'] = $hash;
 
-	protected function setUp ()
-	{
-		parent::setUp () ;
+        return $headers;
+    }
 
-		$this -> artisan ( 'migrate' ) ;
+    protected function mock(string $className, array $constructorArgs = null)
+    {
+        if (is_null($constructorArgs)) {
+            return Mockery ::mock($className);
+        }
 
-		$this -> hasher = app ( Hasher::class ) ;
-	}
+        return Mockery ::mock($className, $constructorArgs);
+    }
 
-	protected function tearDown ()
-	{
-		$this -> artisan ( 'migrate:reset' ) ;
-		parent::tearDown () ;
-	}
+    protected function patchWithInvalidAppKeyAndSecretHash(string $uri, array $data = [], array $headers = [])
+    {
+        $headers = $this -> attachInvalidAppKeyAndSecretHashToHeadersArray($headers);
+        return parent ::patch($uri, $data, $headers);
+    }
 
-	private function attachValidAppKeyAndSecretHashToHeadersArray ( array $headers )
-	{
-		$hash = $this
-			-> hasher
-			-> make ( 'sec' )
-		;
+    protected function patchWithValidAppKeyAndSecretHash(string $uri, array $data = [], array $headers = [])
+    {
+        $headers = $this -> attachValidAppKeyAndSecretHashToHeadersArray($headers);
+        return parent ::patch($uri, $data, $headers);
+    }
 
-		$headers[ 'x-lk-sanmark-minerva-app-key' ] = 'key' ;
-		$headers[ 'x-lk-sanmark-minerva-app-secret-hash' ] = $hash ;
+    protected function patchWithValidAppKeyAndInvalidSecretHash(string $uri, array $data = [], array $headers = [])
+    {
+        $headers = $this -> attachValidAppKeyAndInvalidSecretHashToHeadersArray($headers);
+        return parent ::patch($uri, $data, $headers);
+    }
 
-		return $headers ;
-	}
+    protected function postWithInvalidAppKeyAndSecretHash(string $uri, array $data = [], array $headers = [])
+    {
+        $headers = $this -> attachInvalidAppKeyAndSecretHashToHeadersArray($headers);
+        return parent ::post($uri, $data, $headers);
+    }
 
-	private function attachValidAppKeyAndInvalidSecretHashToHeadersArray ( array $headers )
-	{
-		$hash = $this
-			-> hasher
-			-> make ( 'invalid-sec' )
-		;
+    protected function postWithValidAppKeyAndSecretHash(string $uri, array $data = [], array $headers = [])
+    {
+        $headers = $this -> attachValidAppKeyAndSecretHashToHeadersArray($headers);
+        return parent ::post($uri, $data, $headers);
+    }
 
-		$headers[ 'x-lk-sanmark-minerva-app-key' ] = 'key' ;
-		$headers[ 'x-lk-sanmark-minerva-app-secret-hash' ] = $hash ;
+    protected function postWithValidAppKeyAndInvalidSecretHash(string $uri, array $data = [], array $headers = [])
+    {
+        $headers = $this -> attachValidAppKeyAndInvalidSecretHashToHeadersArray($headers);
+        return parent ::post($uri, $data, $headers);
+    }
 
-		return $headers ;
-	}
+    protected function setUp()
+    {
+        parent ::setUp();
 
-	private function attachInvalidAppKeyAndSecretHashToHeadersArray ( array $headers )
-	{
-		$hash = $this
-			-> hasher
-			-> make ( 'sec' )
-		;
+        $this -> artisan('migrate');
 
-		$headers[ 'x-lk-sanmark-minerva-app-key' ] = 'invalid-key' ;
-		$headers[ 'x-lk-sanmark-minerva-app-secret-hash' ] = $hash ;
+        $this -> hasher = app(Hasher::class);
+    }
 
-		return $headers ;
-	}
+    protected function tearDown()
+    {
+        $this -> artisan('migrate:reset');
+        parent ::tearDown();
+    }
 
 }

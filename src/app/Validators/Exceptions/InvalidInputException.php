@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Validators\Exceptions ;
+namespace App\Validators\Exceptions;
 
-use Exception ;
-use Throwable ;
+use Exception;
+use Throwable;
 
 class InvalidInputException extends Exception
 {
 
-	private $errors ;
+    private $errors;
 
-	public function __construct ( array $errors = [] , string $message = "" , int $code = 0 , Throwable $previous = null )
-	{
-		$this -> errors = $errors ;
-		parent::__construct ( $message , $code , $previous ) ;
-	}
+    public function __construct(array $errors = [], string $message = "", int $code = 0, Throwable $previous = null)
+    {
+        $this -> errors = $errors;
+        parent ::__construct($message, $code, $previous);
+    }
 
-	public function getErrors ()
-	{
-		return $this -> errors ;
-	}
+    public function getErrors()
+    {
+        return $this -> errors;
+    }
 
 }

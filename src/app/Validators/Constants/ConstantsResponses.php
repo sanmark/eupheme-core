@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Validators\Constants ;
+namespace App\Validators\Constants;
 
 class ConstantsResponses
 {
 
-	const MustBeInteger = 'must_be_integer' ;
-	const Required = 'required' ;
+    const MustBeInteger = 'must_be_integer';
+    const Required = 'required';
 
 }

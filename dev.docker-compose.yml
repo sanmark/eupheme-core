@@ -1,12 +1,12 @@
 version: '3'
 services:
-  lk-sanmark-minerva-dev:
+  lk-sanmark-eupheme-dev:
     build:
       context: .
       dockerfile: dev.Dockerfile
     env_file:
       - ./src/.env
-    image: lk-sanmark-minerva-dev
+    image: lk-sanmark-eupheme-dev
     ports:
       - 80:80
     volumes:
