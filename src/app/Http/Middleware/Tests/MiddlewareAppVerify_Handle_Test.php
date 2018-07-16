@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware\Tests;
 
+use App\Constants\ConstantsHeader;
 use App\Http\Middleware\MiddlewareAppVerify;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Http\JsonResponse;
@@ -29,12 +30,12 @@ class MiddlewareAppVerify_Handle_Test extends TestCase
 
         $request
             -> shouldReceive('header')
-            -> withArgs(['x-lk-sanmark-minerva-app-key'])
+            -> withArgs([ConstantsHeader::APP_KEY])
             -> andReturn('key');
 
         $request
             -> shouldReceive('header')
-            -> withArgs(['x-lk-sanmark-minerva-app-secret-hash'])
+            -> withArgs([ConstantsHeader::APP_SECRET_HASH])
             -> andReturn('sec-hashed');
 
         $hasher
@@ -63,12 +64,12 @@ class MiddlewareAppVerify_Handle_Test extends TestCase
 
         $request
             -> shouldReceive('header')
-            -> withArgs(['x-lk-sanmark-minerva-app-key'])
+            -> withArgs([ConstantsHeader::APP_KEY])
             -> andReturnNull();
 
         $request
             -> shouldReceive('header')
-            -> withArgs(['x-lk-sanmark-minerva-app-secret-hash'])
+            -> withArgs([ConstantsHeader::APP_SECRET_HASH])
             -> andReturnNull();
 
         $response = $middlewareAppVerify -> handle($request, $next);

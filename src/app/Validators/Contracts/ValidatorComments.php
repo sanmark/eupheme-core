@@ -2,10 +2,9 @@
 
 namespace App\Validators\Contracts;
 
-interface ValidatorGroups
+
+interface ValidatorComments
 {
 
     public function create(array $data);
-
-    public function update(array $data);
 }

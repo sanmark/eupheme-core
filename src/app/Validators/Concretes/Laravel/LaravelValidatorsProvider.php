@@ -2,8 +2,8 @@
 
 namespace App\Validators\Concretes\Laravel;
 
-use App\Validators\Concretes\Laravel\Validators\ConcreteValidatorGroups;
-use App\Validators\Contracts\ValidatorGroups;
+use App\Validators\Concretes\Laravel\Validators\ConcreteValidatorComments;
+use App\Validators\Contracts\ValidatorComments;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelValidatorsProvider extends ServiceProvider
@@ -11,14 +11,8 @@ class LaravelValidatorsProvider extends ServiceProvider
 
     public function register()
     {
-        $map = [
-            ValidatorGroups::class => ConcreteValidatorGroups::class,
-        ];
-
-        foreach ($map as $contract => $concrete) {
-            $this -> app
-                -> bind($contract, $concrete);
-        }
+        $this->app->bind(ValidatorComments::class,
+            ConcreteValidatorComments::class);
     }
 
 }

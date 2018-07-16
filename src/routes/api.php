@@ -10,3 +10,6 @@ foreach ($files as $file) {
         require_once $file;
     }
 }
+
+Route::post ('comments', 'App\Http\Controllers\Api\ControllerComments@create')
+    ->name('api.comments.save');

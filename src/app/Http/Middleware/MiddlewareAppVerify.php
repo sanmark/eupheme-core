@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Constants\ConstantsHeader;
 use App\Http\Responses\ErrorResponse;
 use Closure;
 use Illuminate\Contracts\Hashing\Hasher;
@@ -20,8 +21,8 @@ class MiddlewareAppVerify
 
     public function handle(Request $request, Closure $next)
     {
-        $key = $request -> header('x-lk-sanmark-minerva-app-key');
-        $secretHash = $request -> header('x-lk-sanmark-minerva-app-secret-hash');
+        $key = $request -> header(ConstantsHeader::APP_KEY);
+        $secretHash = $request -> header(ConstantsHeader::APP_SECRET_HASH);
 
         $keys = config('apps.keys');
 

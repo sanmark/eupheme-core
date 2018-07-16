@@ -2,8 +2,8 @@
 
 namespace App\Repos\Concretes\Eloquent;
 
-use App\Repos\Concretes\Eloquent\Repos\ConcreteRepoGroups;
-use App\Repos\Contracts\RepoGroups;
+use App\Repos\Concretes\Eloquent\Repos\ConcreteRepoComments;
+use App\Repos\Contracts\RepoComments;
 use Illuminate\Support\ServiceProvider;
 
 class EloquentReposProvider extends ServiceProvider
@@ -11,14 +11,7 @@ class EloquentReposProvider extends ServiceProvider
 
     public function register()
     {
-        $map = [
-            RepoGroups::class => ConcreteRepoGroups::class,
-        ];
-
-        foreach ($map as $contract => $concrete) {
-            $this -> app
-                -> bind($contract, $concrete);
-        }
+        $this->app->bind(RepoComments::class, ConcreteRepoComments::class);
     }
 
 }

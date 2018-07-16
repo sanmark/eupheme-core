@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Constants\ConstantsHeader;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Mockery;
@@ -26,8 +27,8 @@ abstract class TestCase extends BaseTestCase
             -> hasher
             -> make('sec');
 
-        $headers['x-lk-sanmark-minerva-app-key'] = 'invalid-key';
-        $headers['x-lk-sanmark-minerva-app-secret-hash'] = $hash;
+        $headers[ConstantsHeader::APP_KEY] = 'invalid-key';
+        $headers[ConstantsHeader::APP_SECRET_HASH] = $hash;
 
         return $headers;
     }
@@ -44,8 +45,8 @@ abstract class TestCase extends BaseTestCase
             -> hasher
             -> make('invalid-sec');
 
-        $headers['x-lk-sanmark-minerva-app-key'] = 'key';
-        $headers['x-lk-sanmark-minerva-app-secret-hash'] = $hash;
+        $headers[ConstantsHeader::APP_KEY] = 'key';
+        $headers[ConstantsHeader::APP_SECRET_HASH] = $hash;
 
         return $headers;
     }
@@ -62,8 +63,8 @@ abstract class TestCase extends BaseTestCase
             -> hasher
             -> make('sec');
 
-        $headers['x-lk-sanmark-minerva-app-key'] = 'key';
-        $headers['x-lk-sanmark-minerva-app-secret-hash'] = $hash;
+        $headers[ConstantsHeader::APP_KEY] = 'key';
+        $headers[ConstantsHeader::APP_SECRET_HASH] = $hash;
 
         return $headers;
     }

@@ -19,7 +19,7 @@ class SuccessResponse
         return
             response()
                 -> json([
-                    'data' => $this -> data,
+                    'payload' => $this -> data,
                 ])
                 -> setStatusCode($this -> statusCode);
     }
