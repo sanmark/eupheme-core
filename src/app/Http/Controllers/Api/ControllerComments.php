@@ -30,4 +30,12 @@ class ControllerComments extends Controller
             return $errorResponse -> getResponse();
         }
     }
+
+    public function get($id)
+    {
+        $comments = $this -> handlerComment -> get($id);
+
+        $response = new SuccessResponse($comments, 200);
+        return $response -> getResponse();
+    }
 }

@@ -13,4 +13,5 @@ class Comment
     public $status;
     public $createdAt;
     public $updatedAt;
+    public $children;
 }

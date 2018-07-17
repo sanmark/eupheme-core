@@ -27,4 +27,8 @@ class HandlerComments
 
     }
 
+    public function get($ref)
+    {
+        return $this -> repoComments -> get($ref);
+    }
 }

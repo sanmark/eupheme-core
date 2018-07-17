@@ -68,4 +68,23 @@ class HandlerCommentTest extends TestCase
 
         $handlerComment -> create([]);
     }
+
+    public function test_get_success()
+    {
+        $repoComments = $this -> mock(RepoComments::class);
+        $validatorComments = $this -> mock(ValidatorComments::class);
+
+        $comment = new Comment();
+        $repoComments -> shouldReceive('get')
+            -> withArgs([1])
+            -> andReturn([$comment]);
+
+        $handlerComments = new HandlerComments($validatorComments, $repoComments);
+
+        $response = $handlerComments -> get(1);
+
+        $this -> assertEquals([$comment], $response);
+
+
+    }
 }

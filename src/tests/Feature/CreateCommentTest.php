@@ -28,12 +28,13 @@ class CreateCommentTest extends TestCase
                     'parentID' => 3,
                     'text' => 'comment text',
                     'userID' => 4,
-                    'status' => ConstantsCommentStatus::PENDING
+                    'status' => ConstantsCommentStatus::PENDING,
+                    'children' => []
                 ]
             ]
         );
 
-        $this->assertDatabaseHas('comments', [
+        $this -> assertDatabaseHas('comments', [
             'ext_ref' => 1,
             'parent_id' => 3,
             'text' => 'comment text',

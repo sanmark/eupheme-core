@@ -14,12 +14,12 @@ class ConcreteValidatorComments extends Base implements ValidatorComments
     public function create(array $data)
     {
         $rules = [
-            'text' =>[
+            'text' => [
                 ConstantsRules::Required => ConstantsResponses::Required
             ]
         ];
 
-        $this->process($data, $rules);
+        $this -> process($data, $rules);
 
     }
 }

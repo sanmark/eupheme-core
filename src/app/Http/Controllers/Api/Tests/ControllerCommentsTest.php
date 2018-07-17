@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Tests;
 
 
+use App\Constants\ConstantsCommentStatus;
 use App\Handlers\HandlerComments;
 use App\Http\Controllers\Api\ControllerComments;
 use App\Models\Comment;
@@ -21,10 +22,11 @@ class ControllerCommentsTest extends TestCase
         $mockComment = $this -> mock(Comment::class);
         $mockComment -> text = 'foo';
         $mockComment -> id = 1;
-        $mockComment->extRef = null;
-        $mockComment->parentID= null;
-        $mockComment->userID = null;
-        $mockComment->status = null;
+        $mockComment -> extRef = null;
+        $mockComment -> parentID = null;
+        $mockComment -> userID = null;
+        $mockComment -> status = null;
+        $mockComment -> children = [];
 
         $controllerComment = new ControllerComments($handlersComment);
 
@@ -47,14 +49,15 @@ class ControllerCommentsTest extends TestCase
             'userID' => null,
             'status' => null,
             'createdAt' => null,
-            'updatedAt' =>null
+            'updatedAt' => null,
+            'children' => []
         ];
 
         $response = $controllerComment -> create($request);
 
         $this -> assertInstanceOf(JsonResponse::class, $response);
 
-        $this -> assertEquals(200, $response->getStatusCode());
+        $this -> assertEquals(200, $response -> getStatusCode());
 
         $this -> assertEquals((object)[
             'payload' => (object)$payload
@@ -67,15 +70,15 @@ class ControllerCommentsTest extends TestCase
 
         $mockHandlerComment = $this -> mock(HandlerComments::class);
 
-        $mockException = $this ->mock(InvalidInputException::class);
+        $mockException = $this -> mock(InvalidInputException::class);
 
         $mockHandlerComment -> shouldReceive('create')
             -> once()
             -> andThrow($mockException);
 
         $mockException -> shouldReceive('getErrors')
-            ->once()
-            ->andReturn([]);
+            -> once()
+            -> andReturn([]);
 
         $controllerComment = new ControllerComments($mockHandlerComment);
 
@@ -85,6 +88,41 @@ class ControllerCommentsTest extends TestCase
 
         $this -> assertInstanceOf(JsonResponse::class, $response);
 
-        $this -> assertEquals(422, $response->status());
+        $this -> assertEquals(422, $response -> status());
+    }
+
+    public function test_get_success()
+    {
+        $mockHandlerComment = $this -> mock(HandlerComments::class);
+
+        $payload = [
+            'extRef' => 1,
+            'parentID' => 2,
+            'text' => 'foo',
+            'userID' => 3,
+            'status' => ConstantsCommentStatus::PENDING,
+            'children' => []
+        ];
+
+        $mockHandlerComment -> shouldReceive('get')
+            -> once()
+            -> withArgs([1])
+            -> andReturn([$payload]);
+
+        $controllerComment = new ControllerComments($mockHandlerComment);
+
+        $response = $controllerComment -> get(1);
+
+        $this -> assertInstanceOf(JsonResponse::class, $response);
+
+        $this -> assertEquals(200, $response -> status());
+
+        $data = $response -> getData();
+
+        $this -> assertEquals((object)[
+            'payload' => [
+                (object)$payload
+            ]
+        ], $data);
     }
 }

@@ -9,4 +9,6 @@ interface RepoComments
 {
 
     public function create(array $data): Comment;
+
+    public function get($ref): array;
 }

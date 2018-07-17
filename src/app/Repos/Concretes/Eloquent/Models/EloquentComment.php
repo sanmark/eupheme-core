@@ -3,6 +3,8 @@
 namespace App\Repos\Concretes\Eloquent\Models;
 
 
+use App\Constants\ConstantsCommentStatus;
+
 class EloquentComment extends Base
 {
 
@@ -15,4 +17,10 @@ class EloquentComment extends Base
     ];
 
     protected $table = 'comments';
+
+    public function children()
+    {
+        return $this -> hasMany(EloquentComment::class, 'parent_id') -> where('status',
+            ConstantsCommentStatus::APPROVED) -> with('children');
+    }
 }

@@ -11,7 +11,7 @@ class EloquentReposProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind(RepoComments::class, ConcreteRepoComments::class);
+        $this -> app -> bind(RepoComments::class, ConcreteRepoComments::class);
     }
 
 }

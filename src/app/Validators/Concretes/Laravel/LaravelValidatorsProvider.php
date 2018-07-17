@@ -11,7 +11,7 @@ class LaravelValidatorsProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind(ValidatorComments::class,
+        $this -> app -> bind(ValidatorComments::class,
             ConcreteValidatorComments::class);
     }
 
