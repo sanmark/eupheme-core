@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     env_file:
-      - ./src/.env
+    - docker-compose.d/.env
     image: lk-sanmark-eupheme-dev
     ports:
       - 80:80

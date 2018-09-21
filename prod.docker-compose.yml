@@ -1,0 +1,11 @@
+version: '3'
+services:
+  lk-sanmark-eupheme:
+    build:
+      context: .
+      dockerfile: prod.Dockerfile
+    image: lk-sanmark-eupheme
+    ports:
+    - 80:80
+    env_file:
+    - docker-compose.d/.env
